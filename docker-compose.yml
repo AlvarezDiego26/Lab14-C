@@ -1,0 +1,10 @@
+services:
+  biblioteca-api:
+    build:
+      context: ./Biblioteca.Mvc
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__DefaultConnection: ${ConnectionStrings__DefaultConnection}

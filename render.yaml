@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: biblioteca-net8
+    runtime: docker
+    rootDir: Biblioteca.Mvc
+    plan: free
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ConnectionStrings__DefaultConnection
+        sync: false
