@@ -1,0 +1,35 @@
+name: Build and Deploy .NET Application
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore BibliotecaNet8.sln
+
+      - name: Build application
+        run: dotnet build BibliotecaNet8.sln --configuration Release --no-restore
+
+      - name: Publish application
+        run: dotnet publish Biblioteca.Mvc/Biblioteca.Mvc.csproj --configuration Release --output ./published --no-build
+
+      - name: Upload published artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: biblioteca-mvc-published
+          path: ./published
